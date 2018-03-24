@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rbc-e8-aV7">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="122" width="375" height="545"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="SlB-Ce-Rex" detailTextLabel="ZNi-OA-oBw" style="IBUITableViewCellStyleSubtitle" id="1tv-Pp-k5n">
@@ -48,11 +48,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="カテゴリ名" translatesAutoresizingMaskIntoConstraints="NO" id="o6U-6p-kIg">
+                                <rect key="frame" x="0.0" y="64" width="375" height="58"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="o6U-6p-kIg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0Tb-Ql-RUb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="rbc-e8-aV7" secondAttribute="bottom" id="Hvy-Gn-K7A"/>
-                            <constraint firstItem="rbc-e8-aV7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PuQ-Bn-FHt"/>
+                            <constraint firstItem="o6U-6p-kIg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Kj9-om-OS2"/>
+                            <constraint firstItem="rbc-e8-aV7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="58" id="PuQ-Bn-FHt"/>
+                            <constraint firstItem="o6U-6p-kIg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="f07-h9-pCb"/>
+                            <constraint firstItem="rbc-e8-aV7" firstAttribute="top" secondItem="o6U-6p-kIg" secondAttribute="bottom" id="rYf-GD-pDe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rbc-e8-aV7" secondAttribute="trailing" id="v3V-SH-RtD"/>
                             <constraint firstItem="rbc-e8-aV7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wIK-Nc-i80"/>
                         </constraints>
@@ -66,6 +74,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="serchBarText" destination="o6U-6p-kIg" id="X3N-bN-e1A"/>
                         <outlet property="tableView" destination="rbc-e8-aV7" id="2D6-OE-MhU"/>
                         <segue destination="m4K-ud-t0V" kind="show" identifier="cellSegue" id="6nb-vu-Qbu"/>
                     </connections>
@@ -110,8 +119,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="an2-fd-M3D">
-                                <rect key="frame" x="10" y="304" width="375" height="120"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="カテゴリ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmy-fn-7kI">
+                                <rect key="frame" x="10" y="306" width="355" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i0X-Yd-Bya">
+                                <rect key="frame" x="10" y="337" width="355" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="an2-fd-M3D">
+                                <rect key="frame" x="0.0" y="377" width="375" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="QMD-VE-h0V"/>
                                 </constraints>
@@ -125,22 +146,31 @@
                             <constraint firstItem="aCt-aA-p7S" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="0Kx-t7-Eow"/>
                             <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="aCt-aA-p7S" secondAttribute="trailing" constant="10" id="30Y-EA-gs0"/>
                             <constraint firstItem="aCt-aA-p7S" firstAttribute="top" secondItem="TG5-ZU-ASk" secondAttribute="bottom" constant="10" id="8Fg-cd-eXK"/>
+                            <constraint firstItem="Bmy-fn-7kI" firstAttribute="top" secondItem="aCt-aA-p7S" secondAttribute="bottom" constant="10" id="8VQ-I8-YMv"/>
+                            <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="Bmy-fn-7kI" secondAttribute="trailing" constant="10" id="949-xt-vgS"/>
                             <constraint firstItem="Kii-5Y-qaa" firstAttribute="top" secondItem="Qgf-ih-fac" secondAttribute="top" constant="10" id="B8h-wc-djb"/>
                             <constraint firstItem="Kii-5Y-qaa" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="Bzy-oW-Fwx"/>
+                            <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="i0X-Yd-Bya" secondAttribute="trailing" constant="10" id="Ez9-8w-6Ju"/>
                             <constraint firstItem="TG5-ZU-ASk" firstAttribute="top" secondItem="3Lz-Rl-0Uf" secondAttribute="bottom" constant="10" id="GN2-bZ-exK"/>
                             <constraint firstItem="an2-fd-M3D" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" id="Jkc-9S-ecD"/>
                             <constraint firstItem="3Lz-Rl-0Uf" firstAttribute="top" secondItem="Kii-5Y-qaa" secondAttribute="bottom" constant="10" id="PqP-Ij-HZh"/>
                             <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="3Lz-Rl-0Uf" secondAttribute="trailing" constant="10" id="V3s-5t-fvY"/>
                             <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="an2-fd-M3D" secondAttribute="trailing" id="WwW-Rj-hqt"/>
+                            <constraint firstItem="i0X-Yd-Bya" firstAttribute="top" secondItem="Bmy-fn-7kI" secondAttribute="bottom" constant="10" id="bpD-2l-WqP"/>
                             <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="Kii-5Y-qaa" secondAttribute="trailing" constant="10" id="dPb-jM-iDN"/>
+                            <constraint firstItem="i0X-Yd-Bya" firstAttribute="top" secondItem="Bmy-fn-7kI" secondAttribute="bottom" constant="10" id="eog-2T-XTc"/>
+                            <constraint firstItem="Bmy-fn-7kI" firstAttribute="top" secondItem="aCt-aA-p7S" secondAttribute="bottom" constant="10" id="g7F-qj-L66"/>
                             <constraint firstItem="Qgf-ih-fac" firstAttribute="trailing" secondItem="TG5-ZU-ASk" secondAttribute="trailing" constant="10" id="ijG-E3-alR"/>
+                            <constraint firstItem="an2-fd-M3D" firstAttribute="top" secondItem="i0X-Yd-Bya" secondAttribute="bottom" constant="10" id="jnU-GB-7vt"/>
                             <constraint firstItem="3Lz-Rl-0Uf" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="k8z-sP-Lkc"/>
-                            <constraint firstItem="an2-fd-M3D" firstAttribute="top" secondItem="aCt-aA-p7S" secondAttribute="bottom" constant="10" id="tNA-XT-NtS"/>
+                            <constraint firstItem="i0X-Yd-Bya" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="qul-Xb-WgY"/>
+                            <constraint firstItem="Bmy-fn-7kI" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="sIf-RJ-CNM"/>
                             <constraint firstItem="TG5-ZU-ASk" firstAttribute="leading" secondItem="Qgf-ih-fac" secondAttribute="leading" constant="10" id="zva-ZI-V1i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Qgf-ih-fac"/>
                     </view>
                     <connections>
+                        <outlet property="categoryTxt" destination="i0X-Yd-Bya" id="9c7-HT-OFN"/>
                         <outlet property="contentsTextView" destination="aCt-aA-p7S" id="hud-Kh-Kkb"/>
                         <outlet property="datePicker" destination="an2-fd-M3D" id="KYI-GY-XHV"/>
                         <outlet property="titleTextField" destination="3Lz-Rl-0Uf" id="eyM-vj-6Ab"/>

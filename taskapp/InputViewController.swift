@@ -11,12 +11,13 @@ import RealmSwift
 import UserNotifications
 
 class InputViewController: UIViewController {
-    @IBOutlet weak var titleTextField: UITextField! //←なぜ連結されない？
-    @IBOutlet weak var contentsTextView: UITextView! //←なぜ連結されない？
-    @IBOutlet weak var datePicker: UIDatePicker! //←なぜ連結されない？
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var contentsTextView: UITextView!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var categoryTxt: UITextField!
     
     let realm = try! Realm()
-    var task: Task!
+    var task: Task! //Task.swift のTaskクラス
     
     override func viewDidLoad() {
         // Do any additional setup after loading the view.
@@ -29,6 +30,7 @@ class InputViewController: UIViewController {
         titleTextField.text = task.title
         contentsTextView.text = task.contents
         datePicker.date = task.date
+        categoryTxt.text = task.category
         
     }
     
@@ -46,11 +48,13 @@ class InputViewController: UIViewController {
         try! realm.write {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
+            self.task.category = self.categoryTxt.text!
             self.task.date = self.datePicker.date
             self.realm.add(self.task, update: true)
         }
         print(task.title)
         print(task.date)
+        print(task.category)
         
         setNotification(task: task)
         

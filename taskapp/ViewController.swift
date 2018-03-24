@@ -7,19 +7,30 @@
 //
 
 import UIKit
-import RealmSwift //←追加
-import UserNotifications //←追加
+import RealmSwift
+import UserNotifications
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var serchBarText: UISearchBar!
     
     //Realmインスタンスを取得する
-    let realm = try! Realm() // ←追加
+    let realm = try! Realm()
     
+    let serchText :String = ""
     // DB内のタスクが格納されるリスト。
     // 日付近い順\順でソート:降順
     // 以降内容をアップデートするとリスト内は自動的に更新される
-    var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false) // ←追加
+    var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+    
+
+    /*
+    //Cancelボタンが押された時に呼ばれる
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) -> Results<Task> {
+        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+        return taskArray
+    }
+    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +38,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.delegate = self
         tableView.dataSource = self
+        serchBarText.delegate = self
         
     }
 
@@ -34,18 +46,70 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    //MARK: UITableViewDataSourceプロトコルのメソッド
-    //データの数(=セルの数)を返すメソッド
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskArray.count // ←追加
+    /*
+     func arrayListSelect() -> Results<Task> {
+     let serchText :String! = serchBarText.text
+     
+     if serchText == nil {
+     taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+     } else {
+     taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+     }
+     return taskArray
+     }
+     */
+    /*
+    //テキストが変更されるたびに呼ばれる
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) -> Results<Task> {
+        let serchText :String! = serchBarText.text
+        print(serchText)
+        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+        return taskArray
     }
     
-    //各セルの内容を返すメソッド
+    //Serchボタンが押された時に呼ばれる
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) -> Results<Task>  {
+        let serchText :String! = serchBarText.text
+        print(serchText)
+        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+        return taskArray
+    }
+    */
+    //テキストが変更されるたびに呼ばれる
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let serchText :String! = serchBarText.text
+        print(serchText)
+        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+        
+    }
+    
+    //Searchボタンが押された時に呼ばれる
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let serchText :String! = serchBarText.text
+        print(serchText)
+        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+    }
+    
+    //MARK: UITableViewDataSourceプロトコルのメソッド
+    //データの数(=セルの数)を返すメソッド(必須)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return taskArray.count
+    }
+    /*
+    //データの数(=セルの数)を返すメソッド(必須)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if taskArray == nil {
+            return 0
+        } else {
+            return taskArray!.count
+        }
+    }
+    */
+    
+    //各セルの内容を返すメソッド(必須)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)  -> UITableViewCell {
         //再利用可能な cell を得る
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        return cell
         
         // Cellに値を設定する
         let task = taskArray[indexPath.row]
@@ -77,7 +141,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if editingStyle == .delete {
             
             //削除されたタスクを取得する
-            let task = self.taskArray[indexPath.row]
+            let task = taskArray[indexPath.row]
             
             //ローカル通知をキャンセルする
             let center = UNUserNotificationCenter.current()
