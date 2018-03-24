@@ -23,15 +23,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // 以降内容をアップデートするとリスト内は自動的に更新される
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
     
-
-    /*
-    //Cancelボタンが押された時に呼ばれる
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) -> Results<Task> {
-        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
-        return taskArray
-    }
-    */
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -46,41 +37,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    /*
-     func arrayListSelect() -> Results<Task> {
-     let serchText :String! = serchBarText.text
-     
-     if serchText == nil {
-     taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
-     } else {
-     taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
-     }
-     return taskArray
-     }
-     */
-    /*
-    //テキストが変更されるたびに呼ばれる
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) -> Results<Task> {
-        let serchText :String! = serchBarText.text
-        print(serchText)
-        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
-        return taskArray
-    }
-    
-    //Serchボタンが押された時に呼ばれる
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) -> Results<Task>  {
-        let serchText :String! = serchBarText.text
-        print(serchText)
-        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
-        return taskArray
-    }
-    */
+
     //テキストが変更されるたびに呼ばれる
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let serchText :String! = serchBarText.text
         print(serchText)
         taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
-        
     }
     
     //Searchボタンが押された時に呼ばれる
@@ -95,16 +57,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return taskArray.count
     }
-    /*
-    //データの数(=セルの数)を返すメソッド(必須)
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if taskArray == nil {
-            return 0
-        } else {
-            return taskArray!.count
-        }
-    }
-    */
     
     //各セルの内容を返すメソッド(必須)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)  -> UITableViewCell {
