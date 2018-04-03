@@ -42,14 +42,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let serchText :String! = serchBarText.text
         print(serchText)
-        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+        //
+        if serchText != "" {
+            taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+            tableView.reloadData()
+        } else {
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+            tableView.reloadData()
+        }
     }
     
     //Searchボタンが押された時に呼ばれる
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let serchText :String! = serchBarText.text
         print(serchText)
-        taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+        //
+        if serchText != "" {
+            taskArray = try! Realm().objects(Task.self).filter("category == %@", serchText).sorted(byKeyPath: "date", ascending: false)
+            tableView.reloadData()
+        } else {
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
+            tableView.reloadData()
+        }
     }
     
     //MARK: UITableViewDataSourceプロトコルのメソッド
